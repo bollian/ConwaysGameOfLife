@@ -1,6 +1,6 @@
 #ifndef GRID_H_
 #define GRID_H_
-// quick test change, and another
+// quick test change
 using namespace std;
 
 // class containing all data and helper functions for one grid in Conway's Game of Life
