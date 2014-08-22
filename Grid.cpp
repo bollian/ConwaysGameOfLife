@@ -19,8 +19,10 @@ Grid::Grid(const int w, const int h)
 		stub[x] = new bool[height];
 		for (int y = 0; y < height; ++y)
 		{
+			//cout << (bool)(rand() & 1);
 			real[x][y] = (bool)(rand() & 1);
 			stub[x][y] = real[x][y];
+			//cout << real[x][y];
 		}
 	}
 }
