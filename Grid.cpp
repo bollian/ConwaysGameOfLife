@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 #include "Grid.h"
 
 using namespace std;
@@ -10,18 +11,19 @@ Grid::Grid(const int w, const int h)
 	width = w;
 	height = h;
 
-	real = new bool*[width];
-	stub = new bool*[width];
+	real = vector<vector<bool> >();
+	stub = real; // deep copy
 
 	for (int x = 0; x < width; ++x)
 	{
-		real[x] = new bool[height];
-		stub[x] = new bool[height];
+		real.push_back(vector<bool>());
+		stub.push_back(vector<bool>());
+
 		for (int y = 0; y < height; ++y)
 		{
 			//cout << (bool)(rand() & 1);
-			real[x][y] = (bool)(rand() & 1);
-			stub[x][y] = real[x][y];
+			real[x].push_back(rand() & 1);
+			stub[x].push_back(real[x][y]);
 			//cout << real[x][y];
 		}
 	}
@@ -29,6 +31,7 @@ Grid::Grid(const int w, const int h)
 
 Grid::~Grid()
 {
+	/*
 	for (int x = 0; x < width; ++x)
 	{
 		delete[] real[x];
@@ -36,6 +39,7 @@ Grid::~Grid()
 	}
 	delete[] real;
 	delete[] stub;
+	*/
 }
 
 int Grid::getWidth()
@@ -60,7 +64,7 @@ void Grid::process()
 
 			if (stub[x][y]) // if alive
 			{
-				if (count < 2 || count > 3)
+				if (count < 2 || count > 3) // underpopulated or overpopulated
 				{
 					real[x][y] = false; // die
 				}

@@ -1,6 +1,8 @@
 #ifndef GRID_H_
 #define GRID_H_
 
+#include <vector>
+
 using namespace std;
 
 // class containing all data and helper functions for one grid in Conway's Game of Life
@@ -23,8 +25,8 @@ private:
 	int width;
 	int height;
 
-	bool** real;
-	bool** stub;
+	vector<vector<bool> > real;
+	vector<vector<bool> > stub;
 
 	void copy();
 	int adjAndAlive(int, int);
