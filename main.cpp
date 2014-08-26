@@ -9,10 +9,10 @@ using namespace std;
 bool equals(const char* const __restrict first, const char* const __restrict last);
 
 int main() {
-	Grid game = Grid(20, 10);
-	char input[256] = "a";
 	time_t then, now;
 	time(&then);
+	Grid game = Grid(20, 10);
+	char input[256] = "a";
 	time(&now);
 	srand(now);
 	while (!(equals(input, "q") || equals(input, "quit")))

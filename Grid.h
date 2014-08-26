@@ -28,6 +28,8 @@ private:
 	vector<vector<bool> > real;
 	vector<vector<bool> > stub;
 
+	vector<bool*> living;
+
 	void copy();
 	int adjAndAlive(int, int);
 	bool inBounds(int, int);
