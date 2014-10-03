@@ -25,10 +25,10 @@ private:
 	int width;
 	int height;
 
-	vector<vector<bool> > real;
-	vector<vector<bool> > stub;
+	vector<vector<int> > real;
+	vector<vector<int> > stub;
 
-	vector<bool*> living;
+	vector<int*> living;
 
 	void copy();
 	int adjAndAlive(int, int);

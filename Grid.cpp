@@ -11,17 +11,17 @@ Grid::Grid(const int w, const int h)
 	width = w;
 	height = h;
 
-	real = vector<vector<bool> >();
+	real = vector<vector<int> >();
 	stub = real; // deep copy
 
 	for (int x = 0; x < width; ++x)
 	{
-		real.push_back(vector<bool>());
-		stub.push_back(vector<bool>());
+		real.push_back(vector<int>());
+		stub.push_back(vector<int>());
 
 		for (int y = 0; y < height; ++y)
 		{
-			//cout << (bool)(rand() & 1);
+			//cout << (rand() & 1);
 			real[x].push_back(rand() & 1);
 			stub[x].push_back(real[x][y]);
 			//cout << real[x][y];
@@ -66,14 +66,14 @@ void Grid::process()
 			{
 				if (count < 2 || count > 3) // underpopulated or overpopulated
 				{
-					real[x][y] = false; // die
+					real[x][y] = 0; // die
 				}
 			}
 			else // if dead
 			{
 				if (count == 3)
 				{
-					real[x][y] = true;
+					real[x][y] = 1;
 				}
 			}
 		}
