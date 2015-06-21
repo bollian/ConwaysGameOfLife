@@ -126,9 +126,9 @@ int Grid::adjAndAlive(int x, int y)
 	--x;
 	--y;
 	
-	for (int i = 0; i < width; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
-		for (int k = 0; k < height; ++k)
+		for (int k = 0; k < 3; ++k)
 		{
 			if (inBounds(x + i, y + k) && real[x + i][y + k])
 			{
