@@ -84,7 +84,6 @@ void Grid::process()
 
 void Grid::display()
 {
-	cout << "Grid::display" << endl;
 	for (int y = 0; y < height; ++y)
 	{
 		for (int x = 0; x < width; ++x)
@@ -104,7 +103,6 @@ void Grid::display()
 
 void Grid::copy()
 {
-	cout << "Grid::copy" << endl;
 	for (int x = 0; x < width; ++x)
 	{
 		for (int y = 0; y < height; ++y)

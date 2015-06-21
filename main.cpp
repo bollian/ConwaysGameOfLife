@@ -7,8 +7,6 @@
 
 using namespace std;
 
-bool equals(const char* const first, const char* const last);
-
 int main() {
 	time_t then;
 	time_t now;
@@ -37,23 +35,4 @@ int main() {
 	}
 
 	return EXIT_SUCCESS;
-}
-
-bool equals(const char* const first, const char* const last)
-{
-	unsigned int length1 = strlen(first);
-
-	if (length1 != strlen(last))
-	{
-		return false;
-	}
-	for (unsigned int x = 0; x < length1; ++x)
-	{
-		if (first[x] != last[x])
-		{
-			return false;
-		}
-	}
-
-	return true;
 }
