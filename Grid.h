@@ -25,8 +25,8 @@ private:
 	int width;
 	int height;
 
-	vector<vector<int> > real;
-	vector<vector<int> > stub;
+	bool** real;
+	bool** stub;
 
 	vector<int*> living;
 

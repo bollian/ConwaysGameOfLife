@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include <cstdlib>
 #include <cstring>
 #include <time.h>
@@ -6,18 +7,25 @@
 
 using namespace std;
 
-bool equals(const char* const __restrict first, const char* const __restrict last);
+bool equals(const char* const first, const char* const last);
 
 int main() {
-	time_t then, now;
+	time_t then;
+	time_t now;
 	time(&then);
-	Grid game = Grid(20, 10);
-	char input[256] = "a";
+	srand(then);
+	
+	Grid game(20, 10);
+	
+	// first iteration
+	game.display();
+	cout << endl;
+	
 	time(&now);
-	srand(now);
-	while (!(equals(input, "q") || equals(input, "quit")))
+	
+	while (true)
 	{
-		if (difftime(now, then) > 5.0)
+		if (difftime(now, then) > 1.0)
 		{
 			time(&then);
 			game.process();
@@ -31,7 +39,7 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-bool equals(const char* const __restrict first, const char* const __restrict last)
+bool equals(const char* const first, const char* const last)
 {
 	unsigned int length1 = strlen(first);
 

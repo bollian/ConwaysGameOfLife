@@ -7,31 +7,27 @@ using namespace std;
 
 Grid::Grid(const int w, const int h)
 {
-	cout << "Start Construction" << endl;
 	width = w;
 	height = h;
-
-	real = vector<vector<int> >();
-	stub = real; // deep copy
-
-	for (int x = 0; x < width; ++x)
+	
+	real = new bool*[width];
+	stub = new bool*[width];
+	
+	for (int i = 0; i < width; ++i)
 	{
-		real.push_back(vector<int>());
-		stub.push_back(vector<int>());
-
-		for (int y = 0; y < height; ++y)
+		real[i] = new bool[height];
+		stub[i] = new bool[height];
+		
+		for (int k = 0; k < height; ++k)
 		{
-			//cout << (rand() & 1);
-			real[x].push_back(rand() & 1);
-			stub[x].push_back(real[x][y]);
-			//cout << real[x][y];
+			real[i][k] = (bool)(rand() & 1);
+			stub[i][k] = real[i][k];
 		}
 	}
 }
 
 Grid::~Grid()
 {
-	/*
 	for (int x = 0; x < width; ++x)
 	{
 		delete[] real[x];
@@ -39,7 +35,6 @@ Grid::~Grid()
 	}
 	delete[] real;
 	delete[] stub;
-	*/
 }
 
 int Grid::getWidth()
@@ -54,30 +49,36 @@ int Grid::getHeight()
 
 void Grid::process()
 {
-	cout << "Grid::process" << endl;
-	int count;
-	for (int x = 0; x < width; ++x)
+	int neighbours;
+	
+	for (int i = 0; i < width; ++i)
 	{
-		for (int y = 0; y < height; ++y)
+		for (int k = 0; k < height; ++k)
 		{
-			count = adjAndAlive(x, y);
-
-			if (stub[x][y]) // if alive
-			{
-				if (count < 2 || count > 3) // underpopulated or overpopulated
+			neighbours = adjAndAlive(i, k);
+			
+			if (real[i][k])
+			{ // if alive
+				if (neighbours < 2)
 				{
-					real[x][y] = 0; // die
+					stub[i][k] = false;
+				}
+				else if (neighbours < 4)
+				{
+					stub[i][k] = true;
+				}
+				else
+				{
+					stub[i][k] = false;
 				}
 			}
-			else // if dead
+			else if (neighbours == 3)
 			{
-				if (count == 3)
-				{
-					real[x][y] = 1;
-				}
+				stub[i][k] = true;
 			}
 		}
 	}
+	
 	copy();
 }
 
@@ -108,47 +109,40 @@ void Grid::copy()
 	{
 		for (int y = 0; y < height; ++y)
 		{
-			stub[x][y] = real[x][y];
+			real[x][y] = stub[x][y];
 		}
 	}
 }
 
 bool Grid::inBounds(int x, int y)
 {
-	cout << "Grid::inBounds" << endl;
 	return (x >= 0) && (x < width) && (y >= 0) && (y < height);
 }
 
 int Grid::adjAndAlive(int x, int y)
 {
-	cout << "Grid::adjAndAlive" << endl;
-	int x2 = x - 2;
-	int	y2 = y - 2;
-	int	output = 0;
-
-	for (int i = 0; i < 3; ++i)
+	bool was_alive = real[x][y];
+	int count = 0;
+	--x;
+	--y;
+	
+	for (int i = 0; i < width; ++i)
 	{
-		++x2;
-		for (int k = 0; k < 3; ++k)
+		for (int k = 0; k < height; ++k)
 		{
-			++y2;
-			if (inBounds(x, y)) // not outside board
+			if (inBounds(x + i, y + k) && real[x + i][y + k])
 			{
-				cout << "Past Grid::inBounds" << endl;
-				if (!(x2 == x && y2 == y)) // not on function target
-				{
-					cout << "Past Function Target Check" << endl;
-					stub[x2][y2];
-					cout << "Past Access Check" << endl;
-					if (stub[x2][y2] == 1) // TODO: fix segfault + figure out why it's happening
-					{
-						cout << "Past State Check" << endl;
-						++output;
-					}
-				}
+				++count;
 			}
 		}
 	}
-
-	return output;
+	
+	if (was_alive)
+	{
+		return count - 1;
+	}
+	else
+	{
+		return count;
+	}
 }
